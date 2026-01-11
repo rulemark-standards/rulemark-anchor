@@ -3,8 +3,9 @@ import { Footer } from "@/components/footer"
 import Link from "next/link"
 
 const standards = [
+  // CANONICAL FROZEN standards
+  { id: "DAO-001", title: "Compliant DAO Framework", status: "FROZEN", url: "https://records.rulemark.org/DAO-001" },
   // ACTIVE standards
-  { id: "DAO-001", title: "Compliant DAO Framework", status: "ACTIVE" },
   { id: "DAO-002", title: "DAO Member Duties & Liabilities", status: "ACTIVE" },
   { id: "DAO-003", title: "Decentralized Treasury Protocol", status: "ACTIVE" },
   { id: "DAO-004", title: "Auditable DAO Governance Record", status: "ACTIVE" },
@@ -30,6 +31,8 @@ const standards = [
 
 function getStatusStyle(status: string) {
   switch (status) {
+    case "FROZEN":
+      return { text: "[ CANONICAL · FROZEN ]", rowClass: "bg-blue-50/30", idClass: "", titleClass: "", statusClass: "font-bold text-blue-900" }
     case "ACTIVE":
       return { text: "[ CANONICAL · ACTIVE ]", rowClass: "", idClass: "", titleClass: "", statusClass: "font-bold" }
     case "DRAFTING":
@@ -81,11 +84,15 @@ export default function StandardsPage() {
           <div className="border-b border-black">
             {standards.map((standard) => {
               const style = getStatusStyle(standard.status)
+              const href = (standard as any).url || `/standards/${standard.id.toLowerCase()}`
+              const isExternal = !!(standard as any).url
 
               return (
                 <Link
                   key={standard.id}
-                  href={`/standards/${standard.id.toLowerCase()}`}
+                  href={href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
                   className={`flex items-center justify-between border-b border-neutral-200 px-2 py-4 hover:cursor-pointer hover:bg-[#f7f7f7] ${style.rowClass}`}
                 >
                   <span className={`w-24 shrink-0 font-mono text-sm font-bold ${style.idClass}`}>{standard.id}</span>
@@ -93,7 +100,9 @@ export default function StandardsPage() {
                     <h3 className={`font-serif text-lg leading-none ${style.titleClass}`}>{standard.title}</h3>
                     {/* Mobile status */}
                     <span className="mt-1 block font-mono text-[10px] text-neutral-500 md:hidden">
-                      {standard.status === "ACTIVE"
+                      {standard.status === "FROZEN"
+                        ? "[ FROZEN ]"
+                        : standard.status === "ACTIVE"
                         ? "[ ACTIVE ]"
                         : standard.status === "DRAFTING"
                           ? "[ DRAFTING ]"
