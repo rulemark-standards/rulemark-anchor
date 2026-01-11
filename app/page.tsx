@@ -126,7 +126,7 @@ export default function HomePage() {
                   <Link href="/standards/dao-001">
                     <Button className="border-2">View Standard</Button>
                   </Link>
-                  <a href="/downloads/dao-001.pdf" download>
+                  <a href="/downloads/dao-001.pdf" download="RuleMark_DAO-001_Canonical_Record_v1.0.pdf">
                     <Button variant="outline" className="border-2 bg-white">
                       Download PDF
                     </Button>
