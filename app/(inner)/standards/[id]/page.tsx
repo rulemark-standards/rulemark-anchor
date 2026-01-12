@@ -7,7 +7,7 @@ export default function StandardPage({
 }) {
   const { id } = params;
 
-  if (id === "RM-S-DAO-001") {
+  if (id === "DAO-001" || id === "RM-S-DAO-001") {
     return <RM_S_DAO_001 />;
   }
 
